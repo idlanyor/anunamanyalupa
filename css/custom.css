@@ -1,0 +1,179 @@
+    :root {
+        --primary-color: #4361ee;
+        --secondary-color: #3f37c9;
+        --success-color: #4bb543;
+        --danger-color: #dc3545;
+        --background-color: #f8f9fa;
+        --border-color: #e9ecef;
+    }
+
+    body {
+        font-family: 'Segoe UI', system-ui, sans-serif;
+        margin: 0;
+        background-color: var(--background-color);
+        color: #333;
+        line-height: 1.6;
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+
+    h2 {
+        color: var(--primary-color);
+        font-size: 28px;
+        font-weight: 600;
+        text-align: center;
+        margin-bottom: 30px;
+        position: relative;
+        padding-bottom: 10px;
+    }
+
+    h2::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 100px;
+        height: 3px;
+        background-color: var(--primary-color);
+        border-radius: 2px;
+    }
+
+    form {
+        max-width: 600px;
+        margin: 0 auto 40px;
+        padding: 30px;
+        border-radius: 12px;
+        background-color: white;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    label {
+        display: block;
+        font-size: 14px;
+        font-weight: 500;
+        margin-bottom: 8px;
+        color: #2d3748;
+    }
+
+    input[type="text"],
+    input[type="number"] {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        font-size: 14px;
+        transition: border-color 0.3s ease;
+        box-sizing: border-box;
+    }
+
+    input[type="text"]:focus,
+    input[type="number"]:focus {
+        outline: none;
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.1);
+    }
+
+    button {
+        width: 100%;
+        padding: 12px;
+        border: none;
+        border-radius: 8px;
+        background-color: var(--primary-color);
+        color: white;
+        font-size: 16px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: transform 0.2s, background-color 0.2s;
+    }
+
+    button:hover {
+        background-color: var(--secondary-color);
+        transform: translateY(-1px);
+    }
+
+    .data-table {
+        width: 100%;
+        background: white;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        margin-top: 30px;
+    }
+
+    .data-table th {
+        background-color: var(--primary-color);
+        color: white;
+        font-weight: 500;
+        text-transform: uppercase;
+        font-size: 14px;
+        padding: 15px;
+    }
+
+    .data-table td {
+        padding: 12px 15px;
+        border-bottom: 1px solid var(--border-color);
+    }
+
+    .data-table tr:hover {
+        background-color: #f8f9fa;
+    }
+
+    .action-links a {
+        display: inline-block;
+        padding: 6px 12px;
+        border-radius: 6px;
+        font-size: 14px;
+        text-decoration: none;
+        margin: 0 5px;
+        transition: all 0.2s;
+    }
+
+    .edit-link {
+        background-color: #4361ee;
+        color: white;
+    }
+
+    .delete-link {
+        background-color: #dc3545;
+        color: white;
+    }
+
+    .pagination {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 30px;
+        gap: 15px;
+    }
+
+    .pagination a,
+    .pagination span {
+        padding: 10px 20px;
+        border-radius: 8px;
+        background-color: white;
+        color: var(--primary-color);
+        text-decoration: none;
+        font-weight: 500;
+        transition: all 0.2s;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .pagination a:hover {
+        background-color: var(--primary-color);
+        color: white;
+        transform: translateY(-2px);
+    }
+
+    .pagination span {
+        color: #6c757d;
+        background-color: #e9ecef;
+    }
