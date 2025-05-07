@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:80"
+    volumes:
+      - .:/var/www/html
+    depends_on:
+      - db
+    environment:
+      - DB_HOST=db
+      - DB_USER=root
+      - DB_PASSWORD=kanata
+      - DB_NAME=stok_dagang
+
+  db:
+    image: mysql:8.0
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_DATABASE=stok_dagang
+      - MYSQL_ROOT_PASSWORD=kanata
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./stok_dagang.sql:/docker-entrypoint-initdb.d/stok_dagang.sql
+
+volumes:
+  mysql_data: 

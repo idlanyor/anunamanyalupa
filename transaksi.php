@@ -70,7 +70,6 @@ if (isset($_POST['submit'])) {
     $kode_barang = $conn->real_escape_string(trim($_POST['kode_barang']));
     $tipe = $_POST['tipe'];
     $jumlah = intval($_POST['jumlah']);
-    $keterangan = $conn->real_escape_string($_POST['keterangan']);
 
     if (!$nama_barang || !$kode_barang) {
         echo "<script>alert('Nama dan kode barang wajib diisi!');</script>";
@@ -93,8 +92,8 @@ if (isset($_POST['submit'])) {
         if ($stok_baru < 0) {
             echo "<script>alert('Stok tidak cukup!');</script>";
         } else {
-            $conn->query("INSERT INTO persediaan (id_barang, tipe, jumlah, keterangan) 
-                          VALUES ($id_barang, '$tipe', $jumlah, '$keterangan')");
+            $conn->query("INSERT INTO persediaan (id_barang, tipe, jumlah) 
+                          VALUES ($id_barang, '$tipe', $jumlah)");
             $conn->query("UPDATE barang SET stok = $stok_baru WHERE id = $id_barang");
             echo "<script>alert('Data berhasil disimpan'); window.location.href='index.php?page=transaksi';</script>";
         }
@@ -461,7 +460,6 @@ $total_page = ceil($total_data / $limit);
                                                 <th>Tanggal</th>
                                                 <th>Tipe</th>
                                                 <th>Jumlah</th>
-                                                <th>Keterangan</th>
                                                 <th>Aksi</th>
                                             </tr>
                                         </thead>
@@ -478,7 +476,6 @@ $total_page = ceil($total_data / $limit);
                                                             </span>
                                                         </td>
                                                         <td><?= $r['jumlah'] ?></td>
-                                                        <td><?= htmlspecialchars($r['keterangan']) ?></td>
                                                         <td>
                                                             <a href="hapus_transaksi.php?id=<?= $r['id'] ?>" class="btn btn-danger btn-sm" onclick="return confirm('Yakin hapus?')">
                                                                 <i class="fas fa-trash"></i>
