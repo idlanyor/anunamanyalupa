@@ -35,4 +35,3 @@ header('Expires: 0');
 // Output file content
 readfile($filepath);
 exit;
-?> 

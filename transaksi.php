@@ -96,7 +96,7 @@ if (isset($_POST['submit'])) {
             $conn->query("INSERT INTO persediaan (id_barang, tipe, jumlah, keterangan) 
                           VALUES ($id_barang, '$tipe', $jumlah, '$keterangan')");
             $conn->query("UPDATE barang SET stok = $stok_baru WHERE id = $id_barang");
-            echo "<script>alert('Data berhasil disimpan'); window.location.href='transaksi.php';</script>";
+            echo "<script>alert('Data berhasil disimpan'); window.location.href='index.php?page=transaksi';</script>";
         }
     }
 }
@@ -385,153 +385,138 @@ $total_page = ceil($total_data / $limit);
                 </h4>
             </div>
             <div class="card-body">
-                <form method="POST" class="mb-4">
-                    <div class="row g-3">
-                        <div class="col-lg-4">
-                            <div class="form-group">
-                                <label>Nama Barang</label>
-                                <select class="form-control select2" id="nama_barang" name="nama_barang" style="height: 45px;" required>
-                                    <option value="">Pilih Barang</option>
-                                    <?php
-                                    $barang_query = "SELECT id, nama_barang, kode_barang FROM barang ORDER BY nama_barang";
-                                    $barang_result = mysqli_query($conn, $barang_query);
-                                    while ($barang = mysqli_fetch_assoc($barang_result)) {
-                                        echo '<option value="' . $barang['id'] . '" data-kode="' . $barang['kode_barang'] . '">' .
-                                            htmlspecialchars($barang['nama_barang']) . '</option>';
-                                    }
-                                    ?>
-                                </select>
+                <div class="row">
+                    <div class="col-md-4">
+                        <form method="POST" class="mb-4">
+                            <div class="row g-3">
+                                <div class="form-group">
+                                    <label>Nama Barang</label>
+                                    <select class="form-control select2" id="nama_barang" name="nama_barang" style="height: 45px;" required>
+                                        <option value="">Pilih Barang</option>
+                                        <?php
+                                        $barang_query = "SELECT id, nama_barang, kode_barang FROM barang ORDER BY nama_barang";
+                                        $barang_result = mysqli_query($conn, $barang_query);
+                                        while ($barang = mysqli_fetch_assoc($barang_result)) {
+                                            echo '<option value="' . $barang['id'] . '" data-kode="' . $barang['kode_barang'] . '">' .
+                                                htmlspecialchars($barang['nama_barang']) . '</option>';
+                                        }
+                                        ?>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Kode Barang</label>
+                                    <input type="text" id="kode_barang" name="kode_barang" class="form-control" style="height: 45px;" readonly required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Tipe</label>
+                                    <select name="tipe" class="form-control" style="height: 45px;" required>
+                                        <option value="masuk">Masuk</option>
+                                        <option value="keluar">Keluar</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Jumlah</label>
+                                    <input type="number" name="jumlah" class="form-control" style="height: 45px;" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>&nbsp;</label>
+                                    <button type="submit" name="submit" class="btn btn-primary w-100" style="height: 45px;">
+                                        <i class="fas fa-save me-2"></i>Simpan
+                                    </button>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-lg-4">
-                            <div class="form-group">
-                                <label>Kode Barang</label>
-                                <input type="text" id="kode_barang" name="kode_barang" class="form-control" style="height: 45px;" readonly required>
-                            </div>
-                        </div>
-                        <div class="col-lg-4">
-                            <div class="form-group">
-                                <label>Tipe</label>
-                                <select name="tipe" class="form-control" style="height: 45px;" required>
-                                    <option value="masuk">Masuk</option>
-                                    <option value="keluar">Keluar</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-lg-4">
-                            <div class="form-group">
-                                <label>Jumlah</label>
-                                <input type="number" name="jumlah" class="form-control" style="height: 45px;" required>
-                            </div>
-                        </div>
-                        <div class="col-lg-4">
-                            <div class="form-group">
-                                <label>Keterangan</label>
-                                <input type="text" name="keterangan" class="form-control" style="height: 45px;">
-                            </div>
-                        </div>
-                        <div class="col-lg-4">
-                            <div class="form-group">
-                                <label>&nbsp;</label>
-                                <button type="submit" name="submit" class="btn btn-primary w-100" style="height: 45px;">
-                                    <i class="fas fa-save me-2"></i>Simpan
-                                </button>
-                            </div>
-                        </div>
+                        </form>
                     </div>
-                </form>
+                    <div class="col-md-8">
 
-                <div class="card">
-                    <div class="card-header">
-                        <div class="row align-items-center">
-                            <div class="col-md-4">
-                                <div class="search-box">
-                                    <i class="fas fa-search"></i>
-                                    <input type="text" id="searchInput" class="form-control" placeholder="Cari nama/kode barang...">
+
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="row align-items-center">
+                                    <div class="col-md-4">
+                                        <div class="search-box">
+                                            <i class="fas fa-search"></i>
+                                            <input type="text" id="searchInput" class="form-control" placeholder="Cari nama/kode barang...">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <button id="resetSearch" class="btn btn-secondary w-100">
+                                            <i class="fas fa-undo me-2"></i>Reset
+                                        </button>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <button id="exportExcel" class="btn btn-success w-100">
+                                            <i class="fas fa-file-excel me-2"></i>Export Excel
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-md-4">
-                                <div class="date-range">
-                                    <input type="date" id="dateFrom" class="form-control" placeholder="Dari Tanggal">
-                                    <input type="date" id="dateTo" class="form-control" placeholder="Sampai Tanggal">
-                                </div>
-                            </div>
-                            <div class="col-md-2">
-                                <button id="resetSearch" class="btn btn-secondary w-100">
-                                    <i class="fas fa-undo me-2"></i>Reset
-                                </button>
-                            </div>
-                            <div class="col-md-2">
-                                <button id="exportExcel" class="btn btn-success w-100">
-                                    <i class="fas fa-file-excel me-2"></i>Export Excel
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <div id="tableContainer">
-                            <table class="table table-striped table-hover">
-                                <thead>
-                                    <tr>
-                                        <th>Nama Barang</th>
-                                        <th>Kode</th>
-                                        <th>Tanggal</th>
-                                        <th>Tipe</th>
-                                        <th>Jumlah</th>
-                                        <th>Keterangan</th>
-                                        <th>Aksi</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="tableBody">
-                                    <?php if ($riwayat->num_rows): ?>
-                                        <?php while ($r = $riwayat->fetch_assoc()): ?>
+                            <div class="card-body">
+                                <div id="tableContainer">
+                                    <table class="table table-striped table-hover">
+                                        <thead>
                                             <tr>
-                                                <td><?= htmlspecialchars($r['nama_barang']) ?></td>
-                                                <td><?= htmlspecialchars($r['kode_barang']) ?></td>
-                                                <td><?= htmlspecialchars($r['tanggal']) ?></td>
-                                                <td>
-                                                    <span class="badge bg-<?= $r['tipe'] == 'masuk' ? 'success' : 'danger' ?>">
-                                                        <?= ucfirst($r['tipe']) ?>
-                                                    </span>
-                                                </td>
-                                                <td><?= $r['jumlah'] ?></td>
-                                                <td><?= htmlspecialchars($r['keterangan']) ?></td>
-                                                <td>
-                                                    <a href="hapus_transaksi.php?id=<?= $r['id'] ?>" class="btn btn-danger btn-sm" onclick="return confirm('Yakin hapus?')">
-                                                        <i class="fas fa-trash"></i>
-                                                    </a>
-                                                </td>
+                                                <th>Nama Barang</th>
+                                                <th>Kode</th>
+                                                <th>Tanggal</th>
+                                                <th>Tipe</th>
+                                                <th>Jumlah</th>
+                                                <th>Keterangan</th>
+                                                <th>Aksi</th>
                                             </tr>
-                                        <?php endwhile; ?>
-                                    <?php else: ?>
-                                        <tr>
-                                            <td colspan="7" class="text-center py-4">
-                                                <i class="fas fa-inbox fa-3x text-muted mb-3"></i>
-                                                <p class="text-muted">Data tidak ditemukan</p>
-                                            </td>
-                                        </tr>
-                                    <?php endif; ?>
-                                </tbody>
-                            </table>
+                                        </thead>
+                                        <tbody id="tableBody">
+                                            <?php if ($riwayat->num_rows): ?>
+                                                <?php while ($r = $riwayat->fetch_assoc()): ?>
+                                                    <tr>
+                                                        <td><?= htmlspecialchars($r['nama_barang']) ?></td>
+                                                        <td><?= htmlspecialchars($r['kode_barang']) ?></td>
+                                                        <td><?= htmlspecialchars($r['tanggal']) ?></td>
+                                                        <td>
+                                                            <span class="badge bg-<?= $r['tipe'] == 'masuk' ? 'success' : 'danger' ?>">
+                                                                <?= ucfirst($r['tipe']) ?>
+                                                            </span>
+                                                        </td>
+                                                        <td><?= $r['jumlah'] ?></td>
+                                                        <td><?= htmlspecialchars($r['keterangan']) ?></td>
+                                                        <td>
+                                                            <a href="hapus_transaksi.php?id=<?= $r['id'] ?>" class="btn btn-danger btn-sm" onclick="return confirm('Yakin hapus?')">
+                                                                <i class="fas fa-trash"></i>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                <?php endwhile; ?>
+                                            <?php else: ?>
+                                                <tr>
+                                                    <td colspan="7" class="text-center py-4">
+                                                        <i class="fas fa-inbox fa-3x text-muted mb-3"></i>
+                                                        <p class="text-muted">Data tidak ditemukan</p>
+                                                    </td>
+                                                </tr>
+                                            <?php endif; ?>
+                                        </tbody>
+                                    </table>
 
-                            <div class="d-flex justify-content-between align-items-center mt-3">
-                                <div class="total-data">
-                                    <i class="fas fa-database me-2"></i>Total Data: <?= $total_data ?>
-                                </div>
-                                <div class="pagination">
-                                    <?php if ($page > 1): ?>
-                                        <a href="?<?= http_build_query(array_merge($_GET, ['page' => $page - 1])) ?>" class="btn btn-primary btn-sm">
-                                            <i class="fas fa-chevron-left"></i>
-                                        </a>
-                                    <?php endif; ?>
+                                    <div class="d-flex justify-content-between align-items-center mt-3">
+                                        <div class="total-data">
+                                            <i class="fas fa-database me-2"></i>Total Data: <?= $total_data ?>
+                                        </div>
+                                        <div class="pagination">
+                                            <?php if ($page > 1): ?>
+                                                <a href="?<?= http_build_query(array_merge($_GET, ['page' => $page - 1])) ?>" class="btn btn-primary btn-sm">
+                                                    <i class="fas fa-chevron-left"></i>
+                                                </a>
+                                            <?php endif; ?>
 
-                                    <span>Halaman <?= $page ?> dari <?= $total_page ?></span>
+                                            <span>Halaman <?= $page ?> dari <?= $total_page ?></span>
 
-                                    <?php if ($page < $total_page): ?>
-                                        <a href="?<?= http_build_query(array_merge($_GET, ['page' => $page + 1])) ?>" class="btn btn-primary btn-sm">
-                                            <i class="fas fa-chevron-right"></i>
-                                        </a>
-                                    <?php endif; ?>
+                                            <?php if ($page < $total_page): ?>
+                                                <a href="?<?= http_build_query(array_merge($_GET, ['page' => $page + 1])) ?>" class="btn btn-primary btn-sm">
+                                                    <i class="fas fa-chevron-right"></i>
+                                                </a>
+                                            <?php endif; ?>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -635,14 +620,14 @@ $total_page = ceil($total_data / $limit);
                 }
 
                 const whereClause = where.length ? 'WHERE ' + where.join(' AND ') : '';
-                
+
                 // Create separate queries for masuk and keluar
                 const queryMasuk = btoa(`SELECT p.*, b.nama_barang, b.kode_barang 
                     FROM persediaan p 
                     JOIN barang b ON p.id_barang = b.id 
                     ${whereClause} AND p.tipe = 'masuk'
                     ORDER BY p.tanggal DESC`);
-                
+
                 const queryKeluar = btoa(`SELECT p.*, b.nama_barang, b.kode_barang 
                     FROM persediaan p 
                     JOIN barang b ON p.id_barang = b.id 

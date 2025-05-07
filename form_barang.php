@@ -124,7 +124,7 @@ $data_barang = $conn->query($sql_data);
 <div class="pagination">
     <!-- Tombol Sebelumnya -->
     <?php if ($page > 1): ?>
-        <a href="form_barang.php?halaman=<?= $page - 1 ?>" class="pagination-prev">Sebelumnya</a>
+        <a href="index.php?page=form_barang&halaman=<?= $page - 1 ?>" class="pagination-prev">Sebelumnya</a>
     <?php else: ?>
         <span class="pagination-prev">Sebelumnya</span>
     <?php endif; ?>
@@ -134,7 +134,7 @@ $data_barang = $conn->query($sql_data);
 
     <!-- Tombol Berikutnya -->
     <?php if ($page < $total_halaman): ?>
-        <a href="form_barang.php?halaman=<?= $page + 1 ?>" class="pagination-next">Berikutnya</a>
+        <a href="index.php?page=form_barang&halaman=<?= $page + 1 ?>" class="pagination-next">Berikutnya</a>
     <?php else: ?>
         <span class="pagination-next">Berikutnya</span>
     <?php endif; ?>

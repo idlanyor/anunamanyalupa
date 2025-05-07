@@ -27,4 +27,3 @@ if (mysqli_num_rows($check) == 0) {
 } else {
     echo "Pengaturan sudah ada";
 }
-?> 

@@ -32,4 +32,3 @@ if (unlink($filepath)) {
 
 header('Location: index.php?page=pengaturan');
 exit;
-?> 

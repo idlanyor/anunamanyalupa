@@ -53,4 +53,4 @@ if (mysqli_query($conn, $query)) {
 } else {
     echo "<script>alert('Gagal menyimpan perubahan'); window.location='pengaturan.php';</script>";
 }
-?>
+

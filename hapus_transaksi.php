@@ -65,4 +65,3 @@ if ($result && mysqli_num_rows($result) > 0) {
 
 header('Location: index.php?page=transaksi');
 exit;
-?> 
