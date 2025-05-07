@@ -63,6 +63,5 @@ fclose($handle);
 $_SESSION['success'] = "Backup database berhasil dibuat: " . $filename;
 
 // Redirect back to settings page
-header('Location: pengaturan.php');
+header('Location: index.php?page=pengaturan');
 exit;
-?> 

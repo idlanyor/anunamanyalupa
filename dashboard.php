@@ -226,13 +226,7 @@ $stock_status = $conn->query("
             <div class="col-md-12 col-lg-12 ms-auto px-4 py-3">
                 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                     <h1 class="h2">Dashboard</h1>
-                    <div class="btn-toolbar mb-2 mb-md-0">
-                        <div class="btn-group me-2">
-                            <a href="?export=1" class="btn btn-export">
-                                <i class="fas fa-download me-2"></i>Export Data
-                            </a>
-                        </div>
-                    </div>
+                    
                 </div>
 
                 <!-- Statistics Cards -->

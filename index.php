@@ -129,45 +129,45 @@ $settings = mysqli_fetch_assoc($settings_result);
         <div id="content-wrapper" class="d-flex flex-column">
 
             <!-- Main Content -->
-        <div id="content">
-            <!-- Topbar -->
-            <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-                <!-- Sidebar Toggle (Topbar) -->
-                <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
-                    <i class="fa fa-bars"></i>
-                </button>
-            </nav>
-            <!-- Begin Page Content -->
-            <div class="container-fluid">
-                <?php
-                $page = $_GET['page'] ?? 'dashboard';
+            <div id="content">
+                <!-- Topbar -->
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+                    <!-- Sidebar Toggle (Topbar) -->
+                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                        <i class="fa fa-bars"></i>
+                    </button>
+                </nav>
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+                    <?php
+                    $page = $_GET['page'] ?? 'dashboard';
 
-                switch ($page) {
-                    case 'dashboard':
-                        include 'dashboard.php';
-                        break;
-                    case 'master_barang':
-                        include 'master_barang.php';
-                        break;
-                    case 'form_barang':
-                        include 'form_barang.php';
-                        break;
-                    case 'transaksi':
-                        include 'transaksi.php';
-                        break;
-                    case 'stok_limit':
-                        include 'stok_limit.php';
-                        break;
-                    case 'pengaturan':
-                        include 'pengaturan.php';
-                        break;
-                    default:
-                        echo "<h4>Halaman tidak ditemukan!</h4>";
-                        break;
-                }
-                ?>
+                    switch ($page) {
+                        case 'dashboard':
+                            include 'dashboard.php';
+                            break;
+                        case 'master_barang':
+                            include 'master_barang.php';
+                            break;
+                        case 'form_barang':
+                            include 'form_barang.php';
+                            break;
+                        case 'transaksi':
+                            include 'transaksi.php';
+                            break;
+                        case 'stok_limit':
+                            include 'stok_limit.php';
+                            break;
+                        case 'pengaturan':
+                            include 'pengaturan.php';
+                            break;
+                        default:
+                            echo "<h4>Halaman tidak ditemukan!</h4>";
+                            break;
+                    }
+                    ?>
+                </div>
             </div>
-        </div>
             <!-- End of Main Content -->
 
             <!-- Footer -->
@@ -188,93 +188,8 @@ $settings = mysqli_fetch_assoc($settings_result);
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"
         integrity="sha512-0QbL0ph8Tc8g5bLhfVzSqxe9GERORsKhIn1IrpxDAgUsbBGz/V7iSav2zzW325XGd1OMLdL4UiqRJj702IeqnQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.full.min.js" integrity="sha512-RtZU3AyMVArmHLiW0suEZ9McadTdegwbgtiQl5Qqo9kunkVg1ofwueXD8/8wv3Af8jkME3DDe3yLfR8HSJfT2g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.0/js/bootstrap.bundle.min.js" integrity="sha512-wV7Yj1alIZDqZFCUQJy85VN+qvEIly93fIQAN7iqDFCPEucLCeNFz4r35FCo9s6WrpdDQPi80xbljXB8Bjtvcg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-        <script src="./js/sb-admin-2.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.full.min.js" integrity="sha512-RtZU3AyMVArmHLiW0suEZ9McadTdegwbgtiQl5Qqo9kunkVg1ofwueXD8/8wv3Af8jkME3DDe3yLfR8HSJfT2g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.0/js/bootstrap.bundle.min.js" integrity="sha512-wV7Yj1alIZDqZFCUQJy85VN+qvEIly93fIQAN7iqDFCPEucLCeNFz4r35FCo9s6WrpdDQPi80xbljXB8Bjtvcg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="./js/sb-admin-2.min.js"></script>
 </body>
-
 </html>
-<!-- <!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <title>Dashboard</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        body 
-        <header class="d-flex align-items-center p-3 bg-light border-bottom mb-4" style="gap: 10px;">
-    <?php if (!empty($settings['logo_toko'])): ?>
-        <img src="uploads/<?= $settings['logo_toko'] ?>" alt="Logo Toko" style="height: 40px;">
-    <?php endif; ?>
-    <h5 class="mb-0"><?= htmlspecialchars($settings['nama_toko']) ?></h5>
-</header>
-{
-            margin: 0;
-        }
-        .sidebar {
-            height: 100vh;
-            width: 220px;
-            position: fixed;
-            top: 0;
-            left: 0;
-            background-color: #343a40;
-            padding-top: 20px;
-        }
-        .sidebar a {
-            color: #ffffff;
-            padding: 10px 20px;
-            display: block;
-            text-decoration: none;
-        }
-        .sidebar a:hover, .sidebar a.active {
-            background-color: #007bff;
-        }
-        .content {
-            margin-left: 220px;
-            padding: 20px;
-        }
-    </style>
-</head>
-<body> -->
-
-<!-- Sidebar Menu -->
-<!-- <div class="sidebar">
-    <h4 class="text-white text-center">Dashboard</h4>
-    <a href="index.php?page=master_barang" class="<?= ($_GET['page'] ?? '') == 'master_barang' ? 'active' : '' ?>">Master Barang</a>
-    <a href="index.php?page=form_barang" class="<?= ($_GET['page'] ?? '') == 'form_barang' ? 'active' : '' ?>">Form Barang</a>
-    <a href="index.php?page=transaksi" class="<?= ($_GET['page'] ?? '') == 'transaksi' ? 'active' : '' ?>">Transaksi</a>
-    <a href="index.php?page=stok_limit" class="<?= ($_GET['page'] ?? '') == 'stok_limit' ? 'active' : '' ?>">Stok Limit</a>
-    <a href="index.php?page=pengaturan" class="<?= ($_GET['page'] ?? '') == 'pengaturan' ? 'active' : '' ?>">Pengaturan</a>
-    <a href="logout.php">Logout</a>
-</div> -->
-
-<!-- Konten -->
-<!-- <div class="content">
-    <?php
-    $page = $_GET['page'] ?? 'stok_limit';
-
-    switch ($page) {
-        case 'master_barang':
-            include 'master_barang.php';
-            break;
-        case 'form_barang':
-            include 'form_barang.php';
-            break;
-        case 'transaksi':
-            include 'transaksi.php';
-            break;
-        case 'stok_limit':
-            include 'stok_limit.php';
-            break;
-        case 'pengaturan':
-            include 'pengaturan.php';
-            break;
-        default:
-            echo "<h4>Halaman tidak ditemukan!</h4>";
-            break;
-    }
-    ?>
-</div> -->
-<!-- 
-</body>
-</html> -->

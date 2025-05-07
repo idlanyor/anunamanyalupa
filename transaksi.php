@@ -182,7 +182,6 @@ $total_page = ceil($total_data / $limit);
         }
 
         .container {
-            max-width: 1400px;
             margin: 0 auto;
             padding: 20px;
         }
@@ -388,7 +387,7 @@ $total_page = ceil($total_data / $limit);
             <div class="card-body">
                 <form method="POST" class="mb-4">
                     <div class="row g-3">
-                        <div class="col-lg-2">
+                        <div class="col-lg-4">
                             <div class="form-group">
                                 <label>Nama Barang</label>
                                 <select class="form-control select2" id="nama_barang" name="nama_barang" style="height: 45px;" required>
@@ -451,7 +450,7 @@ $total_page = ceil($total_data / $limit);
                                     <input type="text" id="searchInput" class="form-control" placeholder="Cari nama/kode barang...">
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <div class="date-range">
                                     <input type="date" id="dateFrom" class="form-control" placeholder="Dari Tanggal">
                                     <input type="date" id="dateTo" class="form-control" placeholder="Sampai Tanggal">
@@ -460,6 +459,11 @@ $total_page = ceil($total_data / $limit);
                             <div class="col-md-2">
                                 <button id="resetSearch" class="btn btn-secondary w-100">
                                     <i class="fas fa-undo me-2"></i>Reset
+                                </button>
+                            </div>
+                            <div class="col-md-2">
+                                <button id="exportExcel" class="btn btn-success w-100">
+                                    <i class="fas fa-file-excel me-2"></i>Export Excel
                                 </button>
                             </div>
                         </div>
@@ -541,6 +545,7 @@ $total_page = ceil($total_data / $limit);
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script>
+        // Global variables
         let ajaxRequest = null;
         let debounceTimer = null;
 
@@ -608,6 +613,64 @@ $total_page = ceil($total_data / $limit);
                 $('#dateFrom').val('');
                 $('#dateTo').val('');
                 loadData();
+            });
+
+            // Handle Excel Export
+            $('#exportExcel').on('click', function() {
+                const keyword = $('#searchInput').val();
+                const tanggalDari = $('#dateFrom').val();
+                const tanggalSampai = $('#dateTo').val();
+
+                // Build the query for export
+                let where = [];
+                if (keyword) {
+                    where.push(`(b.nama_barang LIKE '%${keyword}%' OR b.kode_barang LIKE '%${keyword}%')`);
+                }
+                if (tanggalDari && tanggalSampai) {
+                    where.push(`DATE(p.tanggal) BETWEEN '${tanggalDari}' AND '${tanggalSampai}'`);
+                } else if (tanggalDari) {
+                    where.push(`DATE(p.tanggal) >= '${tanggalDari}'`);
+                } else if (tanggalSampai) {
+                    where.push(`DATE(p.tanggal) <= '${tanggalSampai}'`);
+                }
+
+                const whereClause = where.length ? 'WHERE ' + where.join(' AND ') : '';
+                
+                // Create separate queries for masuk and keluar
+                const queryMasuk = btoa(`SELECT p.*, b.nama_barang, b.kode_barang 
+                    FROM persediaan p 
+                    JOIN barang b ON p.id_barang = b.id 
+                    ${whereClause} AND p.tipe = 'masuk'
+                    ORDER BY p.tanggal DESC`);
+                
+                const queryKeluar = btoa(`SELECT p.*, b.nama_barang, b.kode_barang 
+                    FROM persediaan p 
+                    JOIN barang b ON p.id_barang = b.id 
+                    ${whereClause} AND p.tipe = 'keluar'
+                    ORDER BY p.tanggal DESC`);
+
+                // Submit the form with the queries
+                const form = $('<form>', {
+                    'method': 'POST',
+                    'action': 'export_excel.php',
+                    'target': '_blank'
+                });
+
+                form.append($('<input>', {
+                    'name': 'query_masuk',
+                    'value': queryMasuk,
+                    'type': 'hidden'
+                }));
+
+                form.append($('<input>', {
+                    'name': 'query_keluar',
+                    'value': queryKeluar,
+                    'type': 'hidden'
+                }));
+
+                $('body').append(form);
+                form.submit();
+                form.remove();
             });
 
             // Initialize Select2

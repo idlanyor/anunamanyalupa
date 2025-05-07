@@ -11,7 +11,7 @@ if (!isset($_SESSION['user_id'])) {
 }
 
 if (!isset($_GET['file'])) {
-    header('Location: pengaturan.php');
+    header('Location: index.php?page=pengaturan');
     exit;
 }
 
@@ -20,7 +20,7 @@ $filepath = 'backups/' . $filename;
 
 if (!file_exists($filepath)) {
     $_SESSION['error'] = "File backup tidak ditemukan";
-    header('Location: pengaturan.php');
+    header('Location: index.php?page=pengaturan');
     exit;
 }
 
@@ -30,6 +30,6 @@ if (unlink($filepath)) {
     $_SESSION['error'] = "Gagal menghapus backup";
 }
 
-header('Location: pengaturan.php');
+header('Location: index.php?page=pengaturan');
 exit;
 ?> 

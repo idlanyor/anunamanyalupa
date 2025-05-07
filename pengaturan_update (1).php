@@ -14,7 +14,7 @@ $username = mysqli_real_escape_string($conn, $_POST['username']);
 $password = $_POST['password'];
 
 if (!empty($password)) {
-    $hashed = password_hash($password, PASSWORD_DEFAULT);
+    $hashed = password_hash($password,PASSWORD_DEFAULT);
     $query = "UPDATE users SET username='$username', password='$hashed' WHERE id=$user_id";
 } else {
     $query = "UPDATE users SET username='$username' WHERE id=$user_id";
