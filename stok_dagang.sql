@@ -21,8 +21,8 @@ SET time_zone = "+00:00";
 --
 -- Database: `stok_dagang`
 --
-CREATE DATABASE stok_dagang;
-USE stok_dagang;
+-- CREATE DATABASE stok_dagang;
+-- USE stok_dagang;
 /*!40111 SET SQL_MODE=@OLD_SQL_MODE */;
 -- --------------------------------------------------------
 
